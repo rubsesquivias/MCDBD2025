@@ -1,0 +1,11 @@
+# Universidad Autónoma de Nuevo León
+## Facultad de Ciencias Físico Matemáticas
+### Maestría en Ciencia de atos
+
+#### Base de Datos Relacionales
+
+Este es el repositorio para la materia de BDR de la MCD, UANL, .... que imparte el profe.... [github.com](https://github.com/albertobenavides)
+
+- [Tarea 1](/tarea1/inv.md)
+- Tarea 2
+...
