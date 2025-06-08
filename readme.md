@@ -4,8 +4,9 @@
 
 #### Base de Datos Relacionales
 
-Este es el repositorio para la materia de BDR de la MCD, UANL, .... que imparte el profe.... [github.com](https://github.com/albertobenavides)
+Este es el repositorio para la materia de BDR de la MCD, UANL, .... que imparte el profe.... [Alberto Benavides](https://github.com/albertobenavides)
 
 - [Tarea 1](/tarea1)
 - [Tarea 2](/tarea2)
+- [Tarea 3](/tarea3)
 ...
