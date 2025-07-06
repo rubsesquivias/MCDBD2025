@@ -46,12 +46,11 @@ drop table playlist_cancion;
 drop table reproduccion;
 
 -- Tabla: Canción
-drop table if exists cancion;
 create table cancion (
     id_cancion int primary key auto_increment,
     titulo varchar(100) not null,
     duracion int,
-    id_album float,
+    id_album int,
     foreign key (id_album) references album(id_album)
 );
 
@@ -126,9 +125,12 @@ insert into album (titulo, fecha_lanzamiento, foto_url, id_artista) values
 ('Dookie', '1994-02-01', 'https://img.com/dookie.jpg', 2),
 ('Absolution', '2003-09-15', 'https://img.com/absolution.jpg', 3),
 ('Torches', '2011-05-23', 'https://img.com/torches.jpg', 4),
-('Dark & Wild', '2014-08-20', 'https://img.com/darkandwild.jpg', 5);
+('Dark & Wild', '2014-08-20', 'https://img.com/darkandwild.jpg', 5),
+('American Idiot', '2004-09-21', 'https://img.com/americanidiot.jpg', 2);
 select * from album;
 drop table album;
+
+
 
 insert into cancion (titulo, duracion, id_album) values
 ('I Saw Her Standing There', '175', 1),
@@ -192,13 +194,38 @@ from cancion
 where duracion = (select min(duracion) from cancion)
    or duracion = (select max(duracion) from cancion);
 
-# Cuantil cuyo resultado es distinto a la mediana
-select percentile_cont(0.25) within group (order by duracion) as cuartil_1
-from cancion;
-
 # Moda (duración más repetida)
 select duracion, count(*) as frecuencia
 from cancion
 group by duracion
 order by frecuencia desc
 limit 1;
+
+-- Subconsultas
+# País que tiene más artistas
+select pais_origen
+from artista
+group by pais_origen
+having count(*) = (
+    select max(total)
+    from (
+        select count(*) as total
+        from artista
+        group by pais_origen
+    ) as sub
+);
+
+# Artistas con más discos guardados
+select nombre
+from artista
+where id_artista in (
+    select id_artista
+    from album
+    group by id_artista
+    having count(*) > 1
+);
+
+
+
+
+
