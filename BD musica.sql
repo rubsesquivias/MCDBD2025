@@ -163,3 +163,42 @@ insert into playlist (nombre, id_usuario, fecha_creacion, privacidad) values
 select * from playlist;
 drop table playlist;
 
+
+-- Ejemplos de Consultas
+# usuarios ordenados por fecha de registro desde el más reciente al más longevo
+select nombre_usuario, email, fecha_registro from usuario order by fecha_registro desc;
+
+# canciones con duración mayor a 4 minutos (240 segundos)
+select titulo, duracion from cancion where duracion > 240;
+
+# Contar cuántos álbumes hay por año
+select fecha_lanzamiento, count(*) as total_albums from album group by fecha_lanzamiento;
+
+# Artistas agrupados por pais
+select pais_origen, count(*) as cantidad_artistas from artista group by pais_origen;
+
+-- Consultas por funciones de agregación
+# Media de duracion de las canciones
+select avg(duracion) as duracion_promedio from cancion;
+
+# Cantidad de canciones por album
+select id_album, count(*) as total_canciones
+from cancion
+group by id_album;
+
+# Cancion más corta y canción mas larga
+select titulo, duracion
+from cancion
+where duracion = (select min(duracion) from cancion)
+   or duracion = (select max(duracion) from cancion);
+
+# Cuantil cuyo resultado es distinto a la mediana
+select percentile_cont(0.25) within group (order by duracion) as cuartil_1
+from cancion;
+
+# Moda (duración más repetida)
+select duracion, count(*) as frecuencia
+from cancion
+group by duracion
+order by frecuencia desc
+limit 1;
