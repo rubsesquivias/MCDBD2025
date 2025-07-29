@@ -13,4 +13,5 @@ Este es el repositorio para la materia de BDR de la MCD, UANL, .... que imparte 
 - [Tarea 5](/tarea5)
 - [Tarea 6](/tarea6)
 - [Tarea 7](/tarea7)
-...
+- [Tarea 8](/tarea8)
+- [Tarea 9](/tarea8)
