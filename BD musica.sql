@@ -273,3 +273,43 @@ BEGIN
     END IF;
 END $$
 DELIMITER ;
+
+# FUNCIONES
+#Procedimiento almacenado para calcular la correlación entre duración de canciones y el número de reproducciones
+CREATE OR REPLACE VIEW canciones_con_reproducciones AS
+SELECT c.id_cancion, c.titulo, c.duracion, COUNT(r.id_reproduccion) AS total_reproducciones
+FROM cancion c
+LEFT JOIN reproduccion r ON c.id_cancion = r.id_cancion
+GROUP BY c.id_cancion, c.titulo, c.duracion;
+
+DELIMITER $$
+CREATE PROCEDURE correlacion_duracion_reproducciones(OUT correlacion DOUBLE)
+BEGIN
+    DECLARE n INT DEFAULT 0;
+    DECLARE sum_x DOUBLE DEFAULT 0;
+    DECLARE sum_y DOUBLE DEFAULT 0;
+    DECLARE sum_xy DOUBLE DEFAULT 0;
+    DECLARE sum_x2 DOUBLE DEFAULT 0;
+    DECLARE sum_y2 DOUBLE DEFAULT 0;
+
+    SELECT COUNT(*) INTO n FROM canciones_con_reproducciones;
+
+    SELECT 
+        SUM(duracion), SUM(total_reproducciones),
+        SUM(duracion * total_reproducciones),
+        SUM(POW(duracion,2)), SUM(POW(total_reproducciones,2))
+    INTO 
+        sum_x, sum_y, sum_xy, sum_x2, sum_y2
+    FROM canciones_con_reproducciones;
+
+    IF n > 1 THEN
+        SET correlacion = (n * sum_xy - sum_x * sum_y) /
+                          SQRT((n * sum_x2 - POW(sum_x, 2)) * (n * sum_y2 - POW(sum_y, 2)));
+    ELSE
+        SET correlacion = NULL;
+    END IF;
+END$$
+DELIMITER ;
+
+CALL correlacion_duracion_reproducciones(@r);
+SELECT @r AS correlacion;

@@ -9,7 +9,11 @@
 - Guarda tu código en tu archivo SQL que publiques en tu repositorio.
 - Genera un reporte en MD donde expliques como funciona tu código (podría ser un minitutorial en tu repositorio)
 
+Se crea una función para calcular la correlación entre duración de canciones y el número de reproducciones, esto para analizar si las canciones más largas tienden a reproducirse más o menos.
 
+Primero se cuenta cuántas veces se ha reproducido cada canción. Después se guarda la función como tal
+
+Finalidad: Permite análisis estadísticos directamente dentro de la base de datos.
 
 **Base de datos de un reproductor de música online**
 [BD_MUSICA](/BD%20musica.sql)
