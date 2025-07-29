@@ -225,7 +225,51 @@ where id_artista in (
     having count(*) > 1
 );
 
+# USO DE JOINS
+# Vista (View)
+CREATE OR REPLACE VIEW vista_canciones_albumes AS
+SELECT c.titulo AS cancion, c.duracion, a.titulo AS album, ar.nombre AS artista
+FROM cancion c
+JOIN album a ON c.id_album = a.id_album
+JOIN artista ar ON a.id_artista = ar.id_artista;
 
+# Left Join
+CREATE OR REPLACE VIEW vista_albumes_con_o_sin_canciones AS
+SELECT a.titulo AS album, ar.nombre AS artista, c.titulo AS cancion
+FROM album a
+LEFT JOIN cancion c ON a.id_album = c.id_album
+JOIN artista ar ON a.id_artista = ar.id_artista;
 
+# Right Join
+CREATE OR REPLACE VIEW vista_playlists_y_canciones AS
+SELECT p.nombre AS playlist, u.nombre_usuario, c.titulo AS cancion
+FROM playlist_cancion pc
+RIGHT JOIN playlist p ON pc.id_playlist = p.id_playlist
+JOIN usuario u ON p.id_usuario = u.id_usuario
+LEFT JOIN cancion c ON pc.id_cancion = c.id_cancion;
 
+# Vista VIEW usando subconsultas
+CREATE OR REPLACE VIEW vista_artistas_top_discos AS
+SELECT ar.nombre AS artista, COUNT(al.id_album) AS total_albumes
+FROM artista ar
+JOIN album al ON ar.id_artista = al.id_artista
+GROUP BY ar.id_artista
+HAVING COUNT(al.id_album) = (
+    SELECT MAX(total) FROM (
+        SELECT COUNT(*) AS total
+        FROM album
+        GROUP BY id_artista
+    ) AS sub
+);
 
+# TRIGGER (Disparador)
+DELIMITER $$
+CREATE TRIGGER set_fecha_creacion_playlist
+BEFORE INSERT ON playlist
+FOR EACH ROW
+BEGIN
+    IF NEW.fecha_creacion IS NULL THEN
+        SET NEW.fecha_creacion = NOW();
+    END IF;
+END $$
+DELIMITER ;
