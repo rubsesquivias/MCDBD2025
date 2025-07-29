@@ -1,0 +1,15 @@
+# TAREA9
+- Usa lo aprendido hasta ahora para crear al menos dos funciones o procedimientos almacenados que calculen alguno de los siguientes resultados (o equivalentes):
+1. correlación entre dos conjuntos de datos
+2. regresión lineal entre dos variables
+3. distancia de levenshtein entre cadenas de caracteres
+4. cantidad de elementos de una rreglo
+5. seasonal naive para series de tiempo
+
+- Guarda tu código en tu archivo SQL que publiques en tu repositorio.
+- Genera un reporte en MD donde expliques como funciona tu código (podría ser un minitutorial en tu repositorio)
+
+
+
+**Base de datos de un reproductor de música online**
+[BD_MUSICA](/BD%20musica.sql)
